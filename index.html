@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Equilibrando Equações</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#e4f3ee;--ink:#1d2b36;--card:#fff;--line:#c4ddd4;--wood:#b9813f;--box:#f5b62e;--boxink:#3b2a05;--w:#46607a;--acc:#23705f;--accink:#fff;--bad:#b9420e}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-weight:600;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:4px 0 2px}
+.sub{margin:0 0 12px;opacity:.8}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:4px 10px;font:inherit;font-weight:800;cursor:pointer;min-width:52px}
+.chip small{display:block;font-size:.7rem;color:var(--box);letter-spacing:1px;line-height:1}
+.chip[aria-current="true"]{border-color:var(--acc);background:var(--acc);color:var(--accink)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.eq{font-size:1.7rem;font-weight:900;min-height:2.2rem}
+.tg{font-size:.9rem;display:flex;gap:6px;align-items:center}
+.stage{overflow:hidden;padding-top:8px}
+#beam{transform-origin:50% 100%;transition:transform .35s}
+#beam.shake{animation:sh .5s}
+@keyframes sh{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+.pans{display:grid;grid-template-columns:1fr 34px 1fr;align-items:end}
+.items{min-height:130px;display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;justify-content:center;padding:8px 6px}
+.eqs{font-size:2rem;font-weight:900;text-align:center;padding-bottom:10px;opacity:.6}
+.bar{height:14px;background:var(--wood);border-radius:8px}
+.post{width:0;height:0;margin:0 auto;border:34px solid transparent;border-top:0;border-bottom:52px solid var(--wood)}
+.bx{width:clamp(38px,9vw,52px);aspect-ratio:1;background:var(--box);color:var(--boxink);border:3px solid #c98d0a;border-radius:9px;display:grid;place-items:center;font-weight:900;font-size:1.4rem;animation:pop .3s}
+.wt{width:30px;height:30px;border-radius:50%;background:var(--w);color:#fff;display:grid;place-items:center;font-size:.85rem;font-weight:900;animation:pop .3s}
+.wt.ten{width:42px;height:42px;font-size:1rem;border:3px solid rgba(255,255,255,.35)}
+.empty{opacity:.5;font-style:italic}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+#msg{min-height:3em;margin:0 0 6px}
+#msg.err{color:var(--bad);font-weight:800}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.lab{font-weight:800}
+button{font:inherit;font-weight:800;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.step{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font-size:1.3rem}
+#k{font-size:1.6rem;font-weight:900;min-width:2ch;text-align:center}
+.seg button{border:2px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px}
+.seg button:first-child{border-radius:12px 0 0 12px}.seg button:last-child{border-radius:0 12px 12px 0}
+.seg button[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:var(--accink)}
+.ops{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.op{padding:12px;border-radius:14px;border:2px solid var(--acc);background:var(--card);color:var(--ink)}
+.op:hover{background:var(--acc);color:var(--accink)}
+.ghost{background:none;border:2px solid var(--line);color:var(--ink);border-radius:12px;padding:6px 12px}
+.ghost:disabled{opacity:.4;cursor:default}
+ol{margin:6px 0 0;padding-left:1.3em}
+li span{opacity:.7}
+#win{border-color:var(--acc);background:var(--card)}
+#win h2{margin:0 0 4px;font-size:1.5rem}
+.go{background:var(--acc);color:var(--accink);border:0;border-radius:12px;padding:10px 18px;margin-top:6px}
+.stars{color:var(--box);font-size:1.6rem;letter-spacing:3px}
+button,.chip{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.bx,.wt{user-select:none;-webkit-user-select:none}
+@media (min-width:700px){
+.wrap{max-width:1180px;padding:22px}
+.bx{width:64px;font-size:1.7rem}.wt{width:38px;height:38px;font-size:1rem}.wt.ten{width:52px;height:52px;font-size:1.15rem}
+.items{min-height:180px;gap:8px}
+.eq{font-size:2.3rem}.eqs{font-size:2.6rem}
+.chip{padding:8px 14px;min-width:62px;font-size:1.1rem}
+.op{padding:18px 12px;font-size:1.1rem;min-height:64px}
+.step{width:54px;height:54px;font-size:1.6rem}#k{font-size:2rem}
+.seg button,.ghost,.go{padding:12px 18px;font-size:1rem;min-height:48px}
+#msg{font-size:1.1rem}
+}
+@media (min-width:900px) and (orientation:landscape){
+.game{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start}
+.game>div:first-child{position:sticky;top:12px}
+.ops{grid-template-columns:1fr}
+}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Equilibrando Equações</h1>
+<p class="sub">Cada caixa <b>?</b> esconde o mesmo valor. Faça a mesma operação nos dois lados para deixar uma caixa sozinha.</p>
+<div class="chips" id="chips" role="group" aria-label="Escolher fase"></div>
+
+<div class="game"><div>
+<div class="card">
+  <div class="top">
+    <div class="eq" id="eq" aria-live="polite"></div>
+    <label class="tg"><input type="checkbox" id="showEq" checked> Mostrar equação</label>
+  </div>
+  <div class="stage">
+    <div id="beam">
+      <div class="pans"><div class="items" id="L"></div><div class="eqs">=</div><div class="items" id="R"></div></div>
+      <div class="bar"></div>
+    </div>
+    <div class="post"></div>
+  </div>
+</div>
+
+<div class="card" id="win" hidden>
+  <h2 id="wt"></h2><div class="stars" id="st"></div><p id="wp"></p>
+  <button class="go" id="next">Próxima fase</button>
+</div>
+
+</div><div>
+<div class="card">
+  <p id="msg" aria-live="polite"></p>
+  <div class="row"><span class="lab">Quantidade</span>
+    <button class="step" id="dn" aria-label="Diminuir">−</button><span id="k">1</span><button class="step" id="up" aria-label="Aumentar">+</button>
+    <span class="lab" style="margin-left:8px">Item</span>
+    <span class="seg"><button id="iN" aria-pressed="true">Peso</button><button id="iX" aria-pressed="false">Caixa</button></span>
+  </div>
+  <div class="ops">
+    <button class="op" id="oAdd"></button><button class="op" id="oSub"></button>
+    <button class="op" id="oMul"></button><button class="op" id="oDiv"></button>
+  </div>
+  <div class="row" style="margin:10px 0 0">
+    <button class="ghost" id="undo">Desfazer</button><button class="ghost" id="reset">Recomeçar fase</button><button class="ghost" id="rand">🎲 Nova fase aleatória</button>
+  </div>
+</div>
+
+<div class="card"><b>Seus passos</b><ol id="log"></ol></div>
+</div></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+// [caixas esq, pesos esq, caixas dir, pesos dir, passos ideais]
+const LV=[[1,3,0,8,1],[1,4,0,11,1],[2,0,0,10,1],[3,2,0,14,2],[2,3,1,7,2],[0,11,3,2,2],[4,1,2,9,3],[5,3,2,18,3],[7,2,3,30,3]];
+// Fases geradas (sempre as mesmas para todos): dificuldade crescente
+let seed=7;const rnd=()=>{seed=seed*16807%2147483647;return seed/2147483647};
+const ri=(a,b)=>a+Math.floor(rnd()*(b-a+1));
+function gen(t){
+  let a,b,c,s;
+  if(t===0){a=1;c=0;b=ri(2,15);s=ri(2,12)}
+  else if(t===1){a=ri(2,5);c=0;b=ri(0,9);s=ri(2,10)}
+  else if(t===2){c=ri(1,4);a=c+ri(1,2);b=ri(0,9);s=ri(2,10)}
+  else if(t===3){c=ri(1,5);a=c+ri(2,4);b=ri(1,12);s=ri(2,12)}
+  else{c=ri(2,6);a=c+ri(3,5);b=ri(1,15);s=ri(3,12)}
+  const d=b+(a-c)*s;let par=0;
+  if(Math.min(b,d)>0)par++;
+  if(a>0&&c>0)par++;
+  if(a-c>1)par++;
+  return rnd()<.5?[a,b,c,d,par]:[c,d,a,b,par];
+}
+[6,6,8,8,6].forEach((n,t)=>{for(let i=0;i<n;i++)LV.push(gen(t))});
+let lv=0,S,hist=[],won=false,K=1,item='n',best=[];
+const clone=o=>JSON.parse(JSON.stringify(o));
+const side=s=>{const p=[];if(s.x)p.push(s.x===1?'x':s.x+'x');if(s.n||!s.x)p.push(s.n);return p.join(' + ')};
+const eqs=s=>side(s.L)+' = '+side(s.R);
+const sol=i=>{const[a,b,c,d]=LV[i];return(d-b)/(a-c)};
+function toks(s,v){let h='';for(let i=0;i<s.x;i++)h+=`<div class="bx">${v??'?'}</div>`;
+  for(let i=0;i<Math.floor(s.n/10);i++)h+='<div class="wt ten">10</div>';
+  for(let i=0;i<s.n%10;i++)h+='<div class="wt">1</div>';
+  return h||'<span class="empty">vazio</span>'}
+function solved(){for(const[a,b]of[[S.L,S.R],[S.R,S.L]])if(a.x===1&&a.n===0&&b.x===0)return b.n;return null}
+function msg(t,err){const m=$('msg');m.innerHTML=t;m.className=err?'err':''}
+function bad(t){msg(t,true);const b=$('beam');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}
+function start(i){lv=i;const[a,b,c,d]=LV[i];S={L:{x:a,n:b},R:{x:c,n:d}};hist=[];won=false;K=1;
+  msg('Descubra quanto vale cada caixa <b>?</b>. O que você fizer de um lado, faça do outro!');draw()}
+function draw(){
+  const v=won?solved():null;
+  $('L').innerHTML=toks(S.L,v);$('R').innerHTML=toks(S.R,v);
+  $('eq').textContent=$('showEq').checked?eqs(S):'';
+  $('win').hidden=!won;
+  $('k').textContent=K;
+  const nm=item==='n'?(K>1?'pesos':'peso'):(K>1?'caixas':'caixa');
+  $('oAdd').textContent=`＋ Colocar ${K} ${nm} nos dois lados`;
+  $('oSub').textContent=`− Tirar ${K} ${nm} dos dois lados`;
+  $('oMul').textContent=`× Multiplicar tudo por ${K}`;
+  $('oDiv').textContent=`÷ Dividir tudo por ${K}`;
+  $('iN').setAttribute('aria-pressed',item==='n');$('iX').setAttribute('aria-pressed',item==='x');
+  $('undo').disabled=!hist.length||won;
+  $('log').innerHTML=hist.map(h=>`<li>${h.t} <span>→ ${h.a}</span></li>`).join('')||'<li><span>Nenhum passo ainda.</span></li>';
+  $('chips').innerHTML=LV.map((_,i)=>`<button class="chip" data-i="${i}" ${i===lv?'aria-current="true"':''} aria-label="Fase ${i+1}">${i+1}<small>${'★'.repeat(best[i]||0)||'&nbsp;'}</small></button>`).join('');
+}
+function op(t){
+  if(won)return;
+  const nm=item==='n'?(K>1?'pesos':'peso'):(K>1?'caixas':'caixa');
+  const N=clone(S),sd=[N.L,N.R];let txt;
+  if(t==='add'){sd.forEach(s=>s[item]+=K);txt=`Colocou ${K} ${nm} nos dois lados`}
+  if(t==='sub'){if(sd.some(s=>s[item]<K))return bad(`Não dá para tirar ${K} ${nm} dos dois lados: um deles tem menos que isso.`);
+    sd.forEach(s=>s[item]-=K);txt=`Tirou ${K} ${nm} dos dois lados`}
+  if(t==='mul'){if(K<2)return bad('Para multiplicar, escolha um número maior que 1.');
+    sd.forEach(s=>{s.x*=K;s.n*=K});txt=`Multiplicou tudo por ${K}`}
+  if(t==='div'){if(K<2)return bad('Para dividir, escolha um número maior que 1.');
+    if(sd.some(s=>s.x%K||s.n%K))return bad(`Não dá para dividir tudo por ${K}: alguma caixa ou peso ficaria cortado.`);
+    sd.forEach(s=>{s.x/=K;s.n/=K});txt=`Dividiu tudo por ${K}`}
+  if(sd.some(s=>s.x>12||s.n>99))return bad('A balança não aguenta tanto! Tente outra operação.');
+  hist.push({p:S,t:txt,a:eqs(N)});S=N;
+  msg('Balança equilibrada. Continue!');
+  const v=solved();
+  if(v!==null){won=true;finish(v)}
+  draw();
+}
+function finish(v){
+  const[lx,ln,rx,rn,par]=LV[lv],st=hist.length<=par?3:hist.length<=par+1?2:1;
+  best[lv]=Math.max(best[lv]||0,st);
+  const ex=(x,n)=>[x?(x===1?v:x+'·'+v):null,n||null].filter(a=>a!==null).join(' + ')||'0';
+  $('wt').textContent=`Cada caixa vale ${v}!`;
+  $('st').textContent='★'.repeat(st)+'☆'.repeat(3-st);
+  $('wp').textContent=`Conferindo na equação original: ${ex(lx,ln)} = ${ex(rx,rn)}, ou seja, ${lx*v+ln} = ${rx*v+rn}. Você usou ${hist.length} passo${hist.length>1?'s':''} (o ideal é ${par}).`;
+  $('next').hidden=lv===LV.length-1;
+  if(lv===LV.length-1)$('wt').textContent+=' Você concluiu todas as fases!';
+}
+$('up').onclick=()=>{K=Math.min(K+1,12);draw()};
+$('dn').onclick=()=>{K=Math.max(K-1,1);draw()};
+$('iN').onclick=()=>{item='n';draw()};$('iX').onclick=()=>{item='x';draw()};
+$('oAdd').onclick=()=>op('add');$('oSub').onclick=()=>op('sub');$('oMul').onclick=()=>op('mul');$('oDiv').onclick=()=>op('div');
+$('undo').onclick=()=>{if(hist.length){S=hist.pop().p;msg('Passo desfeito.');draw()}};
+$('reset').onclick=()=>start(lv);
+$('rand').onclick=()=>{LV.push(gen(ri(2,4)));start(LV.length-1)};
+$('next').onclick=()=>start(lv+1);
+$('showEq').onchange=draw;
+$('chips').onclick=e=>{const b=e.target.closest('.chip');if(b)start(+b.dataset.i)};
+start(0);
+</script>
+</body>
+</html>
