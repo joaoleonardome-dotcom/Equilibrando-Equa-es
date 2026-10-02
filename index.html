@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Equilibrando Equações</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Lora:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
---bg:#e4f3ee;--ink:#1d2b36;--card:#fff;--line:#c4ddd4;--wood:#b9813f;--box:#f5b62e;--boxink:#3b2a05;--w:#46607a;--acc:#23705f;--accink:#fff;--bad:#b9420e}
+--bg:#f3ece0;--ink:#4a3728;--card:#fbf7ef;--line:#e3d5bd;--wood:#b99352;--box:#e5b968;--boxink:#4a3410;--w:#8b6a43;--acc:#8b6a43;--accink:#fff8ec;--bad:#a2502b}
 *,*:before,*:after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-weight:600;line-height:1.4}
 .wrap{max-width:860px;margin:0 auto;padding:16px}
@@ -23,30 +23,30 @@ h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:4px 0 2px}
 .tg{font-size:.9rem;display:flex;gap:6px;align-items:center}
 .stage{padding:16px 0 4px}
 .scale{position:relative}
-.bar{position:absolute;top:0;left:calc((100% - 30px)/4);right:calc((100% - 30px)/4);height:12px;border-radius:8px;background:linear-gradient(#d2ac63,#8a6325);z-index:2}
-.pivot{position:absolute;left:50%;top:-11px;transform:translateX(-50%);width:34px;height:34px;border-radius:50%;background:#8a6325;border:3px solid #d2ac63;color:#fff;font-weight:900;display:grid;place-items:center;z-index:3}
-.pillar{position:absolute;left:50%;top:6px;bottom:10px;width:12px;transform:translateX(-50%);background:linear-gradient(90deg,#8a6325,#d2ac63,#8a6325);z-index:1}
-.base{width:46%;height:16px;margin:0 auto;border-radius:10px 10px 4px 4px;background:linear-gradient(#a57a33,#6f4d17);position:relative;z-index:1}
+.bar{position:absolute;top:0;left:calc((100% - 30px)/4);right:calc((100% - 30px)/4);height:12px;border-radius:8px;background:linear-gradient(#e2c488,#a8823e);z-index:2}
+.pivot{position:absolute;left:50%;top:-11px;transform:translateX(-50%);width:34px;height:34px;border-radius:50%;background:#a8823e;border:3px solid #e2c488;color:#fff;font-weight:900;display:grid;place-items:center;z-index:3}
+.pillar{position:absolute;left:50%;top:6px;bottom:10px;width:12px;transform:translateX(-50%);background:linear-gradient(90deg,#a8823e,#e2c488,#a8823e);z-index:1}
+.base{width:46%;height:16px;margin:0 auto;border-radius:10px 10px 4px 4px;background:linear-gradient(#b99352,#7e5f2b);position:relative;z-index:1}
 .hangs{display:grid;grid-template-columns:1fr 30px 1fr;margin-top:6px}
 .hang{position:relative;display:flex;flex-direction:column;z-index:2}
 .str{position:absolute;left:0;top:0;width:100%;height:calc(100% - 18px)}
 .items{position:relative;flex:1;min-height:170px;display:flex;flex-direction:row;justify-content:center;align-items:flex-end;gap:10px;padding:6px 4px 0}
 .wts,.bxs{display:flex;flex-wrap:wrap-reverse;align-content:flex-start;gap:3px;justify-content:center;align-items:flex-end;min-width:0}
 .bxs{flex:0 0 auto;max-width:45%}
-.pan{height:20px;margin:0 2%;background:linear-gradient(#d2ac63,#8a6325);border-radius:0 0 50% 50%/0 0 100% 100%}
-.bx{width:clamp(26px,5.5vw,34px);aspect-ratio:1;background:var(--box);color:var(--boxink);border:2px solid #c98d0a;border-radius:6px;display:grid;place-items:center;font-weight:900;font-size:1rem;animation:pop .3s}
-.wt{width:22px;height:21px;background:linear-gradient(160deg,#7e8c9a,#36424d);color:#fff;font-size:.6rem;font-weight:900;display:grid;place-items:end center;padding-bottom:2px;clip-path:polygon(34% 0,66% 0,66% 20%,100% 34%,100% 100%,0 100%,0 34%,34% 20%);animation:pop .3s}
-.wt.ten{width:30px;height:28px;font-size:.7rem;background:linear-gradient(160deg,#b98a42,#6b4512)}
+.pan{height:20px;margin:0 2%;background:linear-gradient(#e2c488,#a8823e);border-radius:0 0 50% 50%/0 0 100% 100%}
+.bx{width:clamp(26px,5.5vw,34px);aspect-ratio:1;background:var(--box);color:var(--boxink);border:2px solid #b98a2e;border-radius:6px;display:grid;place-items:center;font-weight:900;font-size:1rem;animation:pop .3s}
+.wt{width:22px;height:21px;background:linear-gradient(160deg,#a08a76,#5e4a3b);color:#fff;font-size:.6rem;font-weight:900;display:grid;place-items:end center;padding-bottom:2px;clip-path:polygon(34% 0,66% 0,66% 20%,100% 34%,100% 100%,0 100%,0 34%,34% 20%);animation:pop .3s}
+.wt.ten{width:30px;height:28px;font-size:.7rem;background:linear-gradient(160deg,#e0c07a,#9a7430)}
 .scale.shake .bar{animation:bt .5s}.scale.shake .hl{animation:dl .5s}.scale.shake .hr{animation:dr .5s}
 @keyframes bt{25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
 @keyframes dl{25%{transform:translateY(10px)}75%{transform:translateY(-10px)}}
 @keyframes dr{25%{transform:translateY(-10px)}75%{transform:translateY(10px)}}
-.bl{position:relative;width:20px;height:24px;border-radius:50% 50% 48% 48%;background:#d4574f;color:#fff;font-size:.6rem;font-weight:900;display:grid;place-items:center;margin-bottom:16px;animation:pop .3s}
-.bl:after{content:"";position:absolute;left:50%;top:100%;height:16px;width:1px;background:#555}
-.bl.ten{width:28px;height:30px;background:#b9433b;font-size:.7rem}.bl.xb{width:30px;height:34px;background:var(--box);color:var(--boxink);font-size:1rem}
+.bl{position:relative;width:20px;height:24px;border-radius:50% 50% 48% 48%;background:#cf9279;color:#fff;font-size:.6rem;font-weight:900;display:grid;place-items:center;margin-bottom:16px;animation:pop .3s}
+.bl:after{content:"";position:absolute;left:50%;top:100%;height:16px;width:1px;background:#8a7560}
+.bl.ten{width:28px;height:30px;background:#bd7a60;font-size:.7rem}.bl.xb{width:30px;height:34px;background:var(--box);color:var(--boxink);font-size:1rem}
 .fr{font-size:.5rem!important}.sm{font-size:.6rem!important}
-.part{background:linear-gradient(90deg,var(--box) var(--p),#fbeec9 0)!important;border-style:dashed}
-.bag{display:flex;flex-wrap:wrap-reverse;gap:2px;padding:3px;border:2px dashed #7a8a99;border-radius:10px;align-items:flex-end;justify-content:center;max-width:96px}
+.part{background:linear-gradient(90deg,var(--box) var(--p),#f6ead0 0)!important;border-style:dashed}
+.bag{display:flex;flex-wrap:wrap-reverse;gap:2px;padding:3px;border:2px dashed #a89377;border-radius:10px;align-items:flex-end;justify-content:center;max-width:96px}
 .op:disabled{opacity:.35;cursor:default}.op:disabled:hover{background:var(--card);color:var(--ink)}
 label{font-size:.95rem;display:flex;gap:4px;align-items:center}
 .empty{opacity:.5;font-style:italic}
@@ -62,8 +62,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-of
 .seg button{border:2px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px}
 .seg button:first-child{border-radius:12px 0 0 12px}.seg button:last-child{border-radius:0 12px 12px 0}
 .seg button[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:var(--accink)}
-.ops{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.op{padding:12px;border-radius:14px;border:2px solid var(--acc);background:var(--card);color:var(--ink)}
+.ops{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:8px}
+.op{font-size:1.8rem;line-height:1;padding:10px 0;border-radius:14px;border:2px solid var(--acc);background:var(--card);color:var(--ink)}
 .op:hover{background:var(--acc);color:var(--accink)}
 .ghost{background:none;border:2px solid var(--line);color:var(--ink);border-radius:12px;padding:6px 12px}
 .ghost:disabled{opacity:.4;cursor:default}
@@ -80,7 +80,7 @@ button,.chip{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .bx{width:42px;font-size:1.2rem}.wt{width:28px;height:26px;font-size:.7rem}.wt.ten{width:38px;height:34px;font-size:.85rem}.items{min-height:210px}
 .eq{font-size:2.3rem}.pivot{width:40px;height:40px;top:-14px}
 .chip{padding:8px 14px;min-width:62px;font-size:1.1rem}
-.op{padding:18px 12px;font-size:1.1rem;min-height:64px}
+.op{padding:14px 0;font-size:2.2rem;min-height:68px}
 .step{width:54px;height:54px;font-size:1.6rem}#k{font-size:2rem}
 .seg button,.ghost,.go{padding:12px 18px;font-size:1rem;min-height:48px}
 #msg{font-size:1.1rem}
@@ -88,8 +88,19 @@ button,.chip{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 @media (min-width:900px) and (orientation:landscape){
 .game{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start}
 .game>div:first-child{position:sticky;top:12px}
-.ops{grid-template-columns:1fr}
 }
+h1{font-family:Lora,Georgia,serif;font-weight:700;letter-spacing:-.01em;color:#5a402b}
+.sub{color:#7a6652;opacity:1}
+.card{border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgba(74,55,40,.06),0 8px 22px rgba(74,55,40,.07)}
+.card>b{font-family:Lora,Georgia,serif;font-size:1.05rem}
+.chip{border-width:1px;border-radius:10px;box-shadow:0 1px 2px rgba(74,55,40,.06)}
+.chip small{color:#c79a3b}
+.op{border-width:1.5px;border-radius:12px;box-shadow:0 1px 2px rgba(74,55,40,.08)}
+.wt.ten{color:#3d2b10}
+.eq{font-family:Lora,Georgia,serif;color:#5a402b}
+.ghost,.seg button{border-width:1px}
+.stars{color:#c79a3b}
+input[type=checkbox]{accent-color:var(--acc)}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -108,7 +119,7 @@ button,.chip{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   </div>
   <div class="stage">
     <div class="scale" id="beam"><div class="pillar"></div><div class="bar"></div><div class="pivot">=</div>
-    <div class="hangs"><div class="hang hl"><svg class="str" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0L4 100M50 0L96 100" stroke="#8a6a3a" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"/></svg><div class="items" id="L"></div><div class="pan"></div></div><div></div><div class="hang hr"><svg class="str" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0L4 100M50 0L96 100" stroke="#8a6a3a" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"/></svg><div class="items" id="R"></div><div class="pan"></div></div></div>
+    <div class="hangs"><div class="hang hl"><svg class="str" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0L4 100M50 0L96 100" stroke="#a08463" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"/></svg><div class="items" id="L"></div><div class="pan"></div></div><div></div><div class="hang hr"><svg class="str" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0L4 100M50 0L96 100" stroke="#a08463" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"/></svg><div class="items" id="R"></div><div class="pan"></div></div></div>
     <div class="base"></div></div>
   </div>
 </div>
@@ -129,10 +140,10 @@ button,.chip{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   <div class="ops">
     <button class="op" id="oAdd"></button><button class="op" id="oSub"></button>
     <button class="op" id="oMul"></button><button class="op" id="oDiv"></button>
-    <button class="op" id="oDist" hidden>( ) Distribuir os parênteses</button><button class="op" id="oNeg" hidden>± Inverter todos os sinais</button>
+    <button class="op" id="oDist" hidden title="Distribuir os parênteses" aria-label="Distribuir os parênteses">( )</button><button class="op" id="oNeg" hidden title="Inverter todos os sinais" aria-label="Inverter todos os sinais">±</button>
   </div>
   <div class="row" style="margin:10px 0 0">
-    <button class="ghost" id="undo">Desfazer</button><button class="ghost" id="reset">Recomeçar fase</button><button class="ghost" id="rand">🎲 Nova fase aleatória</button>
+    <button class="ghost" id="undo">Desfazer</button><button class="ghost" id="reset">Recomeçar fase</button><button class="ghost" id="rand">Fase aleatória</button>
   </div>
 </div>
 
@@ -142,7 +153,7 @@ button,.chip{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   <div class="row"><span class="lab">Incluir</span>
     <label><input type="checkbox" id="g_neg"> Negativos</label><label><input type="checkbox" id="g_frac"> Frações</label><label><input type="checkbox" id="g_par"> Parênteses</label>
     <button class="ghost" id="gn">Gerar 5 fases</button></div>
-  <div class="row"><input id="ed" placeholder="Digite: 3x + 2 = 2x + 9" style="flex:1;min-width:200px;padding:10px;border:2px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink)"><button class="ghost" id="mk">Criar fase</button></div>
+  <div class="row"><input id="ed" placeholder="Digite: 3x + 2 = 2x + 9" style="flex:1;min-width:200px;padding:10px;border:2px solid var(--line);border-radius:10px;font:inherit;background:var(--card);color:var(--ink)"><button class="ghost" id="mk">Criar fase</button></div>
   <p id="edm" style="margin:0;min-height:1.4em"></p>
 </div>
 <div class="card"><b>Seus passos</b><ol id="log"></ol></div>
@@ -204,8 +215,8 @@ function draw(){const c=LV[lv],v=won?U(fs(solved())):null;
   $('eq').textContent=$('showEq').checked?eqs(S):'';
   $('win').hidden=!won;$('k').textContent=K;
   const nm=item==='n'?(K>1?'pesos':'peso'):(K>1?'caixas':'caixa');
-  $('oAdd').textContent=`＋ Colocar ${K} ${nm} nos dois lados`;$('oSub').textContent=`− Tirar ${K} ${nm} dos dois lados`;
-  $('oMul').textContent=`× Multiplicar tudo por ${K}`;$('oDiv').textContent=`÷ Dividir tudo por ${K}`;
+  const lab=[['oAdd','＋','Colocar'],['oSub','−','Tirar'],['oMul','×','Multiplicar tudo por'],['oDiv','÷','Dividir tudo por']];
+  lab.forEach(([i,s,w])=>{$(i).textContent=s;const e=i==='oAdd'||i==='oSub';$(i).setAttribute('aria-label',w+' '+K+(e?' '+nm+' nos dois lados':''));$(i).title=$(i).getAttribute('aria-label')});
   [['oAdd','a'],['oSub','s'],['oMul','m'],['oDiv','d']].forEach(([i,ch])=>$(i).disabled=!c.ops.includes(ch));
   $('oNeg').hidden=!c.neg;$('oDist').hidden=!(S.L.k||S.R.k);
   $('iN').setAttribute('aria-pressed',item==='n');$('iX').setAttribute('aria-pressed',item==='x');
