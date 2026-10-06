@@ -121,6 +121,8 @@ h1{font-family:Lora,Georgia,serif;font-weight:700;letter-spacing:-.01em;color:#5
 [data-sel]{transform:translateY(calc(-8*var(--u))) scale(1.18);filter:brightness(1.15) saturate(1.2);animation:none!important;position:relative;z-index:2}
 .bx[data-sel],.bl[data-sel]{box-shadow:0 0 0 calc(2*var(--u)) #fff,0 0 0 calc(4*var(--u)) var(--acc)}
 .wt[data-sel]{background:linear-gradient(160deg,#f6d77f,#c8963a);color:#3d2b10}
+#pop{position:fixed;z-index:50;background:var(--card);border:1px solid var(--acc);border-radius:12px;padding:6px;box-shadow:0 6px 18px rgba(74,55,40,.25)}
+#pop button{background:var(--acc);color:var(--accink);border:0;border-radius:8px;padding:9px 14px;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}
 input[type=checkbox]{accent-color:var(--acc)}
 
 /* ===== layout geral e escala (--u) ===== */
@@ -213,6 +215,7 @@ html,body{height:100%;overflow:hidden}
   <div class="stage"><div class="scale" id="beam"><div class="hangs"><div class="hang hl"><div class="items" id="L"></div><div class="pan"></div></div><div></div><div class="hang hr"><div class="items" id="R"></div><div class="pan"></div></div></div><div class="mech"><svg class="arms" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M24 0L50 100L76 0" fill="none" stroke="#b58a45" stroke-width="15" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M24 0L50 100L76 0" fill="none" stroke="#e8d09a" stroke-width="9" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><div class="dial"></div><div class="base2"></div><div class="hub">=</div></div></div></div>
 </div></main>
 </div>
+<div id="pop" hidden><button id="popb">Decompor em 10 unidades</button></div>
 <script>
 const $=id=>document.getElementById(id);
 const g=(a,b)=>b?g(b,a%b):Math.abs(a);
@@ -246,19 +249,19 @@ function side(s){const T=[];
 const eqs=s=>side(s.L)+' = '+side(s.R);
 // ---- desenho
 let sel=null;
-function units(x,n,v,sd){let b='',w='';const sm=v!=null&&v.length>2?' sm':'',cnt={};
+function units(x,n,v,sd,d){let b='',w='';const sm=v!=null&&v.length>2?' sm':'',cnt={};
   const at=k=>{if(!sd)return'';const i=cnt[k]=(cnt[k]??-1)+1;return` data-s="${sd}" data-k="${k}" data-i="${i}"${sel&&sel[sd].some(o=>o.k===k&&o.i===i)?' data-sel="1"':''}`};
   if(x[0]){const n1=x[0]<0,sg=n1?-1:1,a=Math.abs(x[0]),q=x[1],wh=Math.floor(a/q),r=a%q;
     for(let i=0;i<wh;i++)b+=n1?`<div class="bl xb"${at('x:-1/1')}>−?</div>`:`<div class="bx${sm}"${at('x:1/1')}>${v??'?'}</div>`;
     if(r)b+=`<div class="${n1?'bl xb':'bx'} part" style="--p:${Math.round(r/q*100)}%" title="${r}/${q} de caixa"${at('x:'+sg*r+'/'+q)}>${n1?'−':''}?</div>`}
   if(n[0]){const n1=n[0]<0,sg=n1?-1:1,a=Math.abs(n[0]),q=n[1],wh=Math.floor(a/q),r=a%q,c=n1?'bl':'wt',m=n1?'−':'';
-    for(let i=0;i<Math.floor(wh/10);i++)w+=`<div class="${c} ten"${at('n:'+sg*10+'/1')}>${m}10</div>`;
-    for(let i=0;i<wh%10;i++)w+=`<div class="${c}"${at('n:'+sg+'/1')}>${m}1</div>`;
+    const T=Math.floor(wh/10),dd=Math.min(d||0,T);for(let i=0;i<T-dd;i++)w+=`<div class="${c} ten"${at('n:'+sg*10+'/1')}>${m}10</div>`;
+    for(let i=0;i<wh%10+10*dd;i++)w+=`<div class="${c}"${at('n:'+sg+'/1')}>${m}1</div>`;
     if(r)w+=`<div class="${c} fr"${at('n:'+sg*r+'/'+q)}>${m}${r}/${q}</div>`}
   return[b,w]}
 function toks(s,v,sd){let bags='';
   for(let i=0;i<s.k;i++){const[b,w]=units(F(s.gx),F(s.gn));bags+=`<div class="bag">${b}${w}</div>`}
-  const[b,w]=units(s.x,s.n,v,sd);
+  const[b,w]=units(s.x,s.n,v,sd,s.d);
   return(bags||b||w)?`<div class="bxs">${bags}${b}</div><div class="wts">${w}</div>`:'<span class="empty">vazio</span>'}
 function solved(){for(const[a,b]of[[S.L,S.R],[S.R,S.L]])if(!a.k&&!b.k&&a.x[0]===1&&a.x[1]===1&&!a.n[0]&&!b.x[0])return b.n;return null}
 function msg(t,err){const m=$('msg');m.innerHTML=t;m.className=err?'err':''}
@@ -347,7 +350,7 @@ $('iN').onclick=()=>{item='n';draw()};$('iX').onclick=()=>{item='x';draw()};
 [['oAdd','add'],['oSub','sub'],['oMul','mul'],['oDiv','div'],['oNeg','neg'],['oDist','dist']].forEach(([i,t])=>$(i).onclick=()=>op(t));
 $('undo').onclick=()=>{if(hist.length){sel=null;S=hist.pop().p;msg('Passo desfeito.');draw()}};
 $('reset').onclick=()=>start(lv);$('next').onclick=()=>start(lv+1);$('showEq').onchange=draw;
-function pick(e){const el=e.target.closest('[data-k]');if(!el||won)return;
+function pick0(e){const el=e.target.closest('[data-k]');if(!el||won)return;
   const s=el.dataset.s,k=el.dataset.k,i=+el.dataset.i;
   sel=sel||{L:[],R:[]};const a=sel[s],j=a.findIndex(x=>x.k===k&&x.i===i);
   if(j>=0)a.splice(j,1);else a.push({k,i});
@@ -362,6 +365,18 @@ function commitSel(A){const N=clone(S),g={},parts=[];A.forEach(x=>g[x.k]=(g[x.k]
     parts.push(`${c>1?c+' × ':''}${U(fs(amt))} ${item==='x'?'caixa':'peso'}`)}
   sel=null;hist.push({p:S,t:'Retirou '+parts.join(' + ')+' dos dois lados',a:eqs(N)});S=N;msg('Balança equilibrada. Continue!');
   const v=solved();if(v!==null){won=true;finish(v)}draw()}
+function hidePop(){$('pop').hidden=true}
+function showPop(s,k,i){const el=document.querySelector(`#${s} [data-k="${k}"][data-i="${i}"]`);if(!el)return;
+  const r=el.getBoundingClientRect(),p=$('pop');p.style.left=r.left+r.width/2+'px';
+  if(r.top<70){p.style.top=r.bottom+8+'px';p.style.transform='translate(-50%,0)'}else{p.style.top=r.top-8+'px';p.style.transform='translate(-50%,-100%)'}
+  p.dataset.s=s;p.hidden=false}
+function pick(e){const el=e.target.closest('[data-k]');pick0(e);hidePop();
+  if(!el||won)return;const k=el.dataset.k,s=el.dataset.s,i=+el.dataset.i;
+  if(/^n:-?10\/1$/.test(k)&&sel&&sel[s].some(o=>o.k===k&&o.i===i))showPop(s,k,i)}
+function dec(s){const z=S[s],T=Math.floor(Math.floor(Math.abs(z.n[0])/z.n[1])/10);
+  if((z.d||0)<T)z.d=(z.d||0)+1;sel=null;hidePop();msg('Peso de 10 decomposto em 10 unidades.');draw()}
+$('popb').onclick=()=>dec($('pop').dataset.s);
+document.addEventListener('click',e=>{if(!e.target.closest('#pop,[data-k]'))hidePop()});
 $('L').onclick=$('R').onclick=pick;
 $('rand').onclick=()=>addLevel(gen(ri(2,4)));
 $('chips').onclick=e=>{const b=e.target.closest('.chip');if(b)start(+b.dataset.i)};
