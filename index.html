@@ -41,9 +41,9 @@ h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:4px 0 2px}
 @keyframes bt{25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
 @keyframes dl{25%{transform:translateY(10px)}75%{transform:translateY(-10px)}}
 @keyframes dr{25%{transform:translateY(-10px)}75%{transform:translateY(10px)}}
-.bl{position:relative;width:20px;height:24px;border-radius:50% 50% 48% 48%;background:#cf9279;color:#fff;font-size:.6rem;font-weight:900;display:grid;place-items:center;margin-bottom:16px;animation:pop .3s}
+.bl{position:relative;width:20px;height:24px;border-radius:50% 50% 48% 48%;background:#d4705f;color:#fff;font-size:.6rem;font-weight:900;display:grid;place-items:center;margin-bottom:16px;animation:pop .3s}
 .bl:after{content:"";position:absolute;left:50%;top:100%;height:16px;width:1px;background:#8a7560}
-.bl.ten{width:28px;height:30px;background:#bd7a60;font-size:.7rem}.bl.xb{width:30px;height:34px;background:var(--box);color:var(--boxink);font-size:1rem}
+.bl.ten{width:28px;height:30px;background:#c45a47;font-size:.7rem}.bl.xb{width:30px;height:34px;background:var(--box);color:var(--boxink);font-size:1rem}
 .fr{font-size:.5rem!important}.sm{font-size:.6rem!important}
 .part{background:linear-gradient(90deg,var(--box) var(--p),#f6ead0 0)!important;border-style:dashed}
 .bag{display:flex;flex-wrap:wrap-reverse;gap:2px;padding:3px;border:2px dashed #a89377;border-radius:10px;align-items:flex-end;justify-content:center;max-width:96px}
@@ -100,66 +100,115 @@ h1{font-family:Lora,Georgia,serif;font-weight:700;letter-spacing:-.01em;color:#5
 .eq{font-family:Lora,Georgia,serif;color:#5a402b}
 .ghost,.seg button{border-width:1px}
 .stars{color:#c79a3b}
+
+/* ===== balança estilo livro didático ===== */
+.hangs{margin-top:0}
+.pan{height:calc(9*var(--u));margin:0 2%;background:linear-gradient(#ebd29b,#b38a3f);border-radius:calc(5*var(--u));box-shadow:0 2px 3px rgba(74,55,40,.25)}
+.mech{position:relative;height:calc(112*var(--u));flex:none}
+.arms{position:absolute;left:0;top:0;width:100%;height:calc(67*var(--u));overflow:visible}
+.dial{position:absolute;left:50%;top:calc(8*var(--u));width:calc(76*var(--u));height:calc(38*var(--u));margin-left:calc(-38*var(--u));background:#fffaf0;border:3px solid #a8823e;border-bottom:0;border-radius:calc(38*var(--u)) calc(38*var(--u)) 0 0;overflow:hidden;z-index:2;box-shadow:inset 0 2px 4px rgba(74,55,40,.15)}
+.dial:before{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from -75deg at 50% 100%,#8b6a43 0 1.2deg,transparent 1.2deg 15deg);-webkit-mask:radial-gradient(circle at 50% 100%,transparent 52%,#000 54%);mask:radial-gradient(circle at 50% 100%,transparent 52%,#000 54%)}
+.dial:after{content:"";position:absolute;left:50%;bottom:0;width:calc(2.5*var(--u));min-width:2px;height:calc(31*var(--u));margin-left:calc(-1.2*var(--u));background:#c0392b;transform-origin:50% 100%;border-radius:2px}
+.base2{position:absolute;left:36%;right:36%;bottom:0;height:calc(38*var(--u));background:linear-gradient(#e6b95f,#bf8a2b);clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);z-index:1}
+.hub{position:absolute;left:50%;top:calc(45*var(--u));width:calc(44*var(--u));height:calc(44*var(--u));margin-left:calc(-22*var(--u));border-radius:50%;background:radial-gradient(circle,#fbf3e0 0 55%,#d9a441 57%);border:3px solid #a8823e;display:grid;place-items:center;font-weight:900;color:#8b6a43;font-size:calc(17*var(--u));z-index:3}
+.scale.shake .dial:after{animation:nd .5s}
+.scale.shake .hl{animation:dl2 .5s}.scale.shake .hr{animation:dr2 .5s}
+@keyframes nd{25%{transform:rotate(-38deg)}75%{transform:rotate(38deg)}}
+@keyframes dl2{25%{transform:translateY(calc(4*var(--u)))}75%{transform:translateY(calc(-4*var(--u)))}}
+@keyframes dr2{25%{transform:translateY(calc(-4*var(--u)))}75%{transform:translateY(calc(4*var(--u)))}}
+@media (min-width:900px) and (orientation:landscape) and (min-height:540px){.scale{justify-content:center}.scale .hangs{flex:none;height:calc(130*var(--u))}}
 input[type=checkbox]{accent-color:var(--acc)}
+
+/* ===== layout geral e escala (--u) ===== */
+.app{--u:1px;max-width:1180px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.side{display:contents}
+.topbar{order:0;display:flex;flex-direction:column;gap:12px}.main{order:2}#win{order:3}.ctrl{order:4}.mkc{order:5}.logc{order:6}
+.hd h1{margin:0 0 4px}.cbox,.ctrl,.mkc,.logc,#win,.stg{margin:0}
+.main{display:flex}.stg{flex:1}
+summary{cursor:pointer;font-family:Lora,Georgia,serif;font-weight:700}
+.mkc[open] summary{margin-bottom:4px}
+@media (min-width:700px){.app{--u:1.25px}}
+.stage{padding:calc(16*var(--u)) 0 4px}
+.bar{height:calc(12*var(--u))}
+.pivot{width:calc(34*var(--u));height:calc(34*var(--u));top:calc(-11*var(--u));font-size:calc(14*var(--u))}
+.pillar{width:calc(12*var(--u));top:calc(6*var(--u))}
+.base{height:calc(16*var(--u))}
+.hangs{margin-top:calc(6*var(--u))}
+.str{height:calc(100% - 18*var(--u))}
+.items{min-height:calc(170*var(--u))}
+.pan{height:calc(20*var(--u))}
+.bx{width:calc(34*var(--u));font-size:calc(16*var(--u));border-radius:calc(6*var(--u))}
+.wt{width:calc(22*var(--u));height:calc(21*var(--u));font-size:calc(9.6*var(--u))}
+.wt.ten{width:calc(30*var(--u));height:calc(28*var(--u));font-size:calc(11.2*var(--u))}
+.bl{width:calc(20*var(--u));height:calc(24*var(--u));margin-bottom:calc(16*var(--u));font-size:calc(9.6*var(--u))}
+.bl:after{height:calc(16*var(--u))}
+.bl.ten{width:calc(28*var(--u));height:calc(30*var(--u));font-size:calc(11*var(--u))}
+.bl.xb{width:calc(30*var(--u));height:calc(34*var(--u));font-size:calc(16*var(--u))}
+.fr{font-size:calc(8*var(--u))!important}.sm{font-size:calc(9.6*var(--u))!important}
+.bag{max-width:calc(96*var(--u))}
+@media (min-width:900px) and (orientation:landscape) and (min-height:540px){
+html,body{height:100%;overflow:hidden}
+.app{--u:clamp(1px,min(calc((100dvh - 340px)/215),calc((100vw - 470px)/340)),3.2px);max-width:none;margin:0;height:100dvh;padding:14px;display:grid;grid-template-columns:clamp(340px,32vw,430px) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:12px 14px}
+.topbar{grid-column:1/-1;flex-direction:column;align-items:stretch;gap:8px}
+.side{display:flex;flex-direction:column;gap:10px;min-height:0;overflow:hidden}
+.main{min-height:0}.stg{display:flex;flex-direction:column;min-height:0}
+.hd h1{font-size:2.1rem;line-height:1.1;margin:0;white-space:nowrap}.hd .sub{display:none}
+.cbox{flex:1;padding:8px 10px}.cbox .chips{margin:0;gap:4px}
+.chip{min-width:38px;padding:2px 4px;font-size:.85rem;border-radius:8px}.chip small{font-size:.6rem}
+.ctrl{padding:12px}#msg{min-height:2.6em;font-size:.95rem;margin:0 0 6px}
+.step{width:40px;height:40px;font-size:1.3rem}#k{font-size:1.5rem}
+.seg button{padding:8px 12px;min-height:0;font-size:.95rem}
+.op{padding:8px 0;min-height:52px;font-size:1.7rem}
+.ghost{padding:8px 12px;min-height:0;font-size:.9rem}
+.logc{flex:1;min-height:70px;overflow:auto;padding:10px 14px}
+.logc ol{font-size:.9rem}
+#win{padding:10px 14px}#win h2{font-size:1.15rem}#win p{margin:4px 0;font-size:.9rem}.go{min-height:0;padding:8px 14px}
+.eq{font-size:clamp(1.8rem,3vw,2.8rem)}
+.stage{flex:1;display:flex;flex-direction:column;min-height:0}
+.scale{flex:1;display:flex;flex-direction:column;min-height:0}
+.hangs{flex:1;min-height:0}.items{min-height:0}
+}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<h1>Equilibrando Equações</h1>
-<p class="sub">Cada caixa <b>?</b> esconde o mesmo valor. Faça a mesma operação nos dois lados para deixar uma caixa sozinha.</p>
-<div class="chips" id="chips" role="group" aria-label="Escolher fase"></div>
-
-<div class="game"><div>
-<div class="card">
-  <div class="top">
-    <div class="eq" id="eq" aria-live="polite"></div>
-    <label class="tg"><input type="checkbox" id="showEq" checked> Mostrar equação</label>
-  </div>
-  <div class="stage">
-    <div class="scale" id="beam"><div class="pillar"></div><div class="bar"></div><div class="pivot">=</div>
-    <div class="hangs"><div class="hang hl"><svg class="str" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0L4 100M50 0L96 100" stroke="#a08463" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"/></svg><div class="items" id="L"></div><div class="pan"></div></div><div></div><div class="hang hr"><svg class="str" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0L4 100M50 0L96 100" stroke="#a08463" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"/></svg><div class="items" id="R"></div><div class="pan"></div></div></div>
-    <div class="base"></div></div>
-  </div>
+<div class="app">
+<div class="topbar">
+  <header class="hd"><h1>Equilibrando Equações</h1>
+  <p class="sub">Cada caixa <b>?</b> esconde o mesmo valor. Faça a mesma operação nos dois lados para deixar uma caixa sozinha.</p></header>
+  <div class="card cbox"><div class="chips" id="chips" role="group" aria-label="Escolher fase"></div></div>
 </div>
-
-<div class="card" id="win" hidden>
-  <h2 id="wt"></h2><div class="stars" id="st"></div><p id="wp"></p>
-  <button class="go" id="next">Próxima fase</button>
-</div>
-
-</div><div>
-<div class="card">
-  <p id="msg" aria-live="polite"></p>
-  <div class="row"><span class="lab">Quantidade</span>
-    <button class="step" id="dn" aria-label="Diminuir">−</button><span id="k">1</span><button class="step" id="up" aria-label="Aumentar">+</button>
-    <span class="lab" style="margin-left:8px">Item</span>
-    <span class="seg"><button id="iN" aria-pressed="true">Peso</button><button id="iX" aria-pressed="false">Caixa</button></span>
+<aside class="side">
+  <div class="card" id="win" hidden><h2 id="wt"></h2><div class="stars" id="st"></div><p id="wp"></p><button class="go" id="next">Próxima fase</button></div>
+  <div class="card ctrl">
+    <p id="msg" aria-live="polite"></p>
+    <div class="row"><span class="lab">Quantidade</span>
+      <button class="step" id="dn" aria-label="Diminuir">−</button><span id="k">1</span><button class="step" id="up" aria-label="Aumentar">+</button>
+      <span class="seg"><button id="iN" aria-pressed="true">Peso</button><button id="iX" aria-pressed="false">Caixa</button></span></div>
+    <div class="ops">
+      <button class="op" id="oAdd"></button><button class="op" id="oSub"></button><button class="op" id="oMul"></button><button class="op" id="oDiv"></button>
+      <button class="op" id="oDist" hidden title="Distribuir os parênteses" aria-label="Distribuir os parênteses">( )</button><button class="op" id="oNeg" hidden title="Inverter todos os sinais" aria-label="Inverter todos os sinais">±</button>
+    </div>
+    <div class="row" style="margin:10px 0 0"><button class="ghost" id="undo">Desfazer</button><button class="ghost" id="reset">Recomeçar</button><button class="ghost" id="rand">Fase aleatória</button></div>
   </div>
-  <div class="ops">
-    <button class="op" id="oAdd"></button><button class="op" id="oSub"></button>
-    <button class="op" id="oMul"></button><button class="op" id="oDiv"></button>
-    <button class="op" id="oDist" hidden title="Distribuir os parênteses" aria-label="Distribuir os parênteses">( )</button><button class="op" id="oNeg" hidden title="Inverter todos os sinais" aria-label="Inverter todos os sinais">±</button>
-  </div>
-  <div class="row" style="margin:10px 0 0">
-    <button class="ghost" id="undo">Desfazer</button><button class="ghost" id="reset">Recomeçar fase</button><button class="ghost" id="rand">Fase aleatória</button>
-  </div>
+  <details class="card mkc"><summary>Criar fases</summary>
+    <div class="row" style="margin-top:8px"><span class="lab">Operações</span>
+      <label><input type="checkbox" id="o_a" checked> Somar</label><label><input type="checkbox" id="o_s" checked> Subtrair</label><label><input type="checkbox" id="o_m" checked> Multiplicar</label><label><input type="checkbox" id="o_d" checked> Dividir</label></div>
+    <div class="row"><span class="lab">Incluir</span>
+      <label><input type="checkbox" id="g_neg"> Negativos</label><label><input type="checkbox" id="g_frac"> Frações</label><label><input type="checkbox" id="g_par"> Parênteses</label>
+      <button class="ghost" id="gn">Gerar 5 fases</button></div>
+    <div class="row"><input id="ed" placeholder="Digite: 3x + 2 = 2x + 9" style="flex:1;min-width:160px;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;background:var(--card);color:var(--ink)"><button class="ghost" id="mk">Criar fase</button></div>
+    <p id="edm" style="margin:0;min-height:1.4em"></p>
+  </details>
+  <div class="card logc"><b>Seus passos</b><ol id="log"></ol></div>
+</aside>
+<main class="main"><div class="card stg">
+  <div class="top"><div class="eq" id="eq" aria-live="polite"></div>
+  <label class="tg"><input type="checkbox" id="showEq" checked> Mostrar equação</label></div>
+  <div class="stage"><div class="scale" id="beam"><div class="hangs"><div class="hang hl"><div class="items" id="L"></div><div class="pan"></div></div><div></div><div class="hang hr"><div class="items" id="R"></div><div class="pan"></div></div></div><div class="mech"><svg class="arms" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M24 0L50 100L76 0" fill="none" stroke="#b58a45" stroke-width="15" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M24 0L50 100L76 0" fill="none" stroke="#e8d09a" stroke-width="9" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><div class="dial"></div><div class="base2"></div><div class="hub">=</div></div></div></div>
+</div></main>
 </div>
-
-<div class="card"><b>Criar fases</b>
-  <div class="row" style="margin-top:8px"><span class="lab">Operações</span>
-    <label><input type="checkbox" id="o_a" checked> Somar</label><label><input type="checkbox" id="o_s" checked> Subtrair</label><label><input type="checkbox" id="o_m" checked> Multiplicar</label><label><input type="checkbox" id="o_d" checked> Dividir</label></div>
-  <div class="row"><span class="lab">Incluir</span>
-    <label><input type="checkbox" id="g_neg"> Negativos</label><label><input type="checkbox" id="g_frac"> Frações</label><label><input type="checkbox" id="g_par"> Parênteses</label>
-    <button class="ghost" id="gn">Gerar 5 fases</button></div>
-  <div class="row"><input id="ed" placeholder="Digite: 3x + 2 = 2x + 9" style="flex:1;min-width:200px;padding:10px;border:2px solid var(--line);border-radius:10px;font:inherit;background:var(--card);color:var(--ink)"><button class="ghost" id="mk">Criar fase</button></div>
-  <p id="edm" style="margin:0;min-height:1.4em"></p>
-</div>
-<div class="card"><b>Seus passos</b><ol id="log"></ol></div>
-</div></div>
-</div>
-
 <script>
 const $=id=>document.getElementById(id);
 const g=(a,b)=>b?g(b,a%b):Math.abs(a);
